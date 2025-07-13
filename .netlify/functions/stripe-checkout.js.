@@ -1,0 +1,53 @@
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+const toIntegerAmount = (dollars) => Math.round(Number(dollars) * 100);
+
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  let cart = [];
+  try {
+    ({ cart } = JSON.parse(event.body));
+  } catch {
+    return { statusCode: 400, body: 'Bad JSON' };
+  }
+
+  if (!Array.isArray(cart) || cart.length === 0) {
+    return { statusCode: 400, body: 'Cart is empty' };
+  }
+
+  const line_items = cart.map((item) => ({
+    price_data: {
+      currency: process.env.CURRENCY || 'usd',
+      product_data: { name: item.name },
+      unit_amount: toIntegerAmount(item.price),
+    },
+    quantity: item.quantity ?? 1,
+  }));
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      payment_method_types: ['card'],
+      line_items,
+      success_url:
+        process.env.SUCCESS_URL ||
+        'https://your-site.com/success?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url:
+        process.env.CANCEL_URL || 'https://your-site.com/cancel',
+    });
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ url: session.url }),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+    };
+  }
+};
