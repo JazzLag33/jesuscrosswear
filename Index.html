@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation&display=swap" rel="stylesheet">
+  <style>
+    html,
+    body {
+      font-size: 18px;
+      background-image: url('sunnyclouds.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: top left;
+      height: auto;
+      background-attachment: fixed;
+      color: white;
+      font-optical-sizing: auto;
+    }
+
+    .title {
+      color: white;
+      text-align: center;
+      font-family: "Kapakana", cursive;
+      font-optical-sizing: auto;
+      font-style: normal;
+      font-size: 68px;
+      animation: flicker 1.5s infinite alternate;
+    }
+
+    .brand-header {
+      background-color: rgba(0, 0, 0, 0.03);
+      padding: 2px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 3px;
+      font-family: "Titillium Web", sans-serif;
+      font-weight: 200;
+      font-size: 38px;
+      font-style: normal;
+    }
+
+    .brand-header p {
+      font-size: 25px;
+      color: white;
+      font-style: normal;
+      font-weight: 500;
+      font-family: "Edu NSW ACT Foundation", cursive;
+    }
+
+    .testimony {
+      padding: 10px;
+      max-width: 1000px;
+      border-radius: 12px;
+      font-family: "Titillium Web", sans-serif;
+      font-size: 25px;
+      font-weight: 300;
+      font-style: normal;
+      display: 
+      flex; 
+      justify-content: center; 
+      gap: 10px; 
+      margin-top: 1.5rem; 
+      flex-wrap: wrap;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 5px auto;
+    }
+
+    .product-card {
+      width: 350px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .product-card img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .image-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .image-row img {
+      width: 45%;
+      margin: 1rem;
+      height: 200px;
+      gap: 2px; /* Space between images */
+      object-fit: cover;
+      aspect-ratio: 2 / 3;
+      border-radius: 5px;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .notify-button {
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+      background: linear-gradient(to right, #6a5acd, #00bfff);
+    }
+
+    .notify-button:hover {
+      background: linear-gradient(to right, #836fff, #1e90ff);
+    }
+
+    .modal-open {
+      overflow: hidden;
+    }
+
+    .gift {
+      margin: 30px auto 10px auto;
+      display: block;
+    }
+
+    #preorderModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    #cartModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+      color: white;
+      background: rgba(0, 0, 0, 0.1);
+      margin-top: 40px;
+      line-height: 1.6;
+    }
+
+    footer a {
+      color: #add8e6;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes flicker {
+      0%   { text-shadow: 0 0 5px #836fff, 0 0 10px #836fff, 0 0 15px #1e90ff; }
+      50%  { text-shadow: 0 0 20px #836fff, 0 0 30px #1e90ff, 0 0 40px #1e90ff; }
+      100% { text-shadow: 0 0 5px #836fff, 0 0 10px #836fff, 0 0 15px #1e90ff; }
+    }
+
+    @media (min-width: 601px) and (max-width: 1024px) {
+      .testimony { font-size: 30px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .title     { font-size: 38px; }
+      .testimony { font-size: 18px; font-weight:200}
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="title"><h1>Cross Wear</h1></div>
+
+    <!-- Brand Header -->
+    <div class="brand-header">
+      <div><h1></h1></div>
+      <p>AVAILABLE EARLY-MID AUGUST</p>
+      <p>✨ Find your Jesus content here. comfortable, affordable ✨</p>
+      <p style="font-style: italic;">This site is being updated regularly — check back often to watch it grow!</p>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid">
+      <!-- Hoodie 1 -->
+      <div class="product-card">
+        <div class="image-row">
+          <img src="oldenglishfront.png" alt="Old English Product Front">
+          <img src="oldenglishback.png" alt="Old English Product Back">
+        </div>
+        <h3>Old English</h3>
+        <p class="price">$45.99 CAD</p>
+        <a class="notify-button" href="mailto:jesuscrosswear@gmail.com?subject=Notify%20Me%20About%20a%20Product&body=Hi%20Crosswear,%0AI’m%20interested%20in%20this%20product:%20_____.%0APlease%20notify%20me%20when%20it’s%20available.%0AThanks!">Notify Me</a>
+        <button class="preorder-button"
+                data-product="Old English"
+                data-front="oldenglishfront.png"
+                data-back="oldenglishback.png"
+                style="background: linear-gradient(135deg, #f4a261, #fcd34d); color: black; padding: 13px 24px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+          Pre-Order
+        </button>
+        <small style="display:block; margin-top:10px; color:white;">+taxes and shipping &amp; handling<br>(tariffs if applicable)</small>
+      </div>
+
+      <!-- Hoodie 2 -->
+      <div class="product-card">
+        <div class="image-row">
+          <img src="handwrittenfront.png" alt="Hand Written product Front">
+          <img src="handwrittenback.png" alt="Hand Written product Back">
+        </div>
+        <h3>Hand Written</h3>
+        <p class="price">$45.99 CAD</p>
+        <a class="notify-button" href="mailto:jesuscrosswear@gmail.com?subject=Notify%20Me%20About%20a%20Product&body=Hi%20Crosswear,%0AI’m%20interested%20in%20this%20product:%20_____.%0APlease%20notify%20me%20when%20it’s%20available.%0AThanks!">Notify Me</a>
+        <button class="preorder-button"
+                data-product="Hand Written"
+                data-front="handwrittenfront.png"
+                data-back="handwrittenback.png"
+                style="background: linear-gradient(135deg, #f4a261, #fcd34d); color: black; padding: 13px 24px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+          Pre-Order
+        </button>
+        <small style="display:block; margin-top:10px; color:white;">+taxes and shipping &amp; handling<br></small>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <p style="font-weight:bold; font-size:20px; color:#ffd700;">Pre-order now and save $10.00</p>
+      <p style="font-size:14px; color:white;">Pre-order discount valid until launch day.</p>
+    </div>
+
+    <!-- Testimony -->
+ <div class="testimony">  
+  <p> In 2017, I came to faith. I didn’t grow up with any kind of religion or cultural influence, but during a hard time, someone asked me, “Have you ever given it to God?” I wasn’t sure how. They said, “Take everything you just told me... and say it to God.” So I did and with an over whelming feelings I added “I’m sorry. Please forgive me.”</p>
+
+  <p> Just then a man passed by me, when I looked up I knew in my heart it was Jesus. as he passed by me He lifted all the guilt, shame, and pain off of me. At the same time powerful feelings of Love were pouring over me. Deep, endless love.</p>
+
+  <p> After that I wanted to run uo to everyone and scream "He is real!!" but people don't really want to talk about Him. I realized people shut down at the mention of God or faith. I realized more then ever I had to get his word out.</p>
+
+  <p>This is a non-invasive way to share His word. God is perfect in the way he works and I believe the right person will be in the right place at theright time, the very moment someone needs to see his word. God will open thier eyes. Sometimes, that’s all it takes to change a life.</p>
+  
+  <p> I have so many ideas I need to get out but I am also open to what people want, if there is a verse you would like to share I am open hear about it. Contact information below.</p>
+
+  <p>If you’d like to support me getting off the ground, there’s a gift button at the bottom. The smallest amount would go along way, thank you. </p>
+  </div>
+  
+</div>
+
+  <!-- Pre-order Modal -->
+  <div id="preorderModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:white; padding:20px; border-radius:12px; color:black; max-width:500px; width:90%; background:linear-gradient(135deg, #f9c5d1, #a1c4fd); max-height:80vh; overflow-y:auto; margin-top:-150px;">
+      <h2 id="modalProductName" style="text-align:center; margin-bottom:15px;"></h2>
+
+      <div id="modalImages" style="display:flex; gap:10px; justify-content:center; margin-bottom:10px;">
+        <img id="modalFront" style="width:45%; border-radius:8px; aspect-ratio:2/3; object-fit:cover;">
+        <img id="modalBack"  style="width:45%; border-radius:8px; aspect-ratio:2/3; object-fit:cover;">
+      </div>
+
+      <!-- Size/Qty Selector -->
+      <div id="sizeQuantitySelector" style="text-align:left; margin-bottom:20px;">
+        <!-- Small -->
+        <div style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
+          <label style="width:70px;">Small</label>
+          <button type="button" onclick="decrementQty('S')" style="padding:4px 10px; font-weight:bold;">−</button>
+          <input type="number" name="qty-S" value="0" min="0" style="width:50px; text-align:center;">
+          <button type="button" onclick="incrementQty('S')" style="padding:4px 10px; font-weight:bold;">+</button>
+        </div>
+        <!-- Medium -->
+        <div style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
+          <label style="width:70px;">Medium</label>
+          <button type="button" onclick="decrementQty('M')" style="padding:4px 10px; font-weight:bold;">−</button>
+          <input type="number" name="qty-M" value="0" min="0" style="width:50px; text-align:center;">
+          <button type="button" onclick="incrementQty('M')" style="padding:4px 10px; font-weight:bold;">+</button>
+        </div>
+        <!-- Large -->
+        <div style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
+          <label style="width:70px;">Large</label>
+          <button type="button" onclick="decrementQty('L')" style="padding:4px 10px; font-weight:bold;">−</button>
+          <input type="number" name="qty-L" value="0" min="0" style="width:50px; text-align:center;">
+          <button type="button" onclick="incrementQty('L')" style="padding:4px 10px; font-weight:bold;">+</button>
+        </div>
+        <!-- XL -->
+        <div style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
+          <label style="width:70px;">X-Large</label>
+          <button type="button" onclick="decrementQty('XL')" style="padding:4px 10px; font-weight:bold;">−</button>
+          <input type="number" name="qty-XL" value="0" min="0" style="width:50px; text-align:center;">
+          <button type="button" onclick="incrementQty('XL')" style="padding:4px 10px; font-weight:bold;">+</button>
+        </div>
+
+        <div id="liveTotal" style="font-weight:bold; margin-top:10px;">Total: $0.00 CAD</div>
+      </div>
+
+      <button onclick="addToCart()"   style="...">Add to cart</button>
+      <button onclick="closeModal()"  style="...">Close</button>
+      <button onclick="viewCart()"    style="position:fixed; top:10px; right:20px; padding:10px 20px; background:white; color:black; border-radius:6px; background:linear-gradient(135deg, #f9c5d1, #a1c4fd); font-weight:bold; z-index:9999;">
+        See Cart (<span id="cartCount">0</span>)
+      </button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:flex-start; overflow-y:auto; padding:40px 0;">
+    <div style="background:white; padding:20px; border-radius:12px; color:black; max-width:500px; width:90%; max-height:90vh; overflow-y:auto; background:linear-gradient(135deg, #f9c5d1, #a1c4fd);">
+      <h2>Your Cart</h2>
+      <div id="cartContents" style="margin-bottom:20px;"></div>
+      <div style="font-weight:bold; font-size:1.3em; margin-bottom:20px;">Total: $<span id="cartTotal">0.00</span> CAD</div>
+
+      <label style="display:block; margin:1rem 0;">
+        Province / Territory
+        <select id="provinceSelect">
+          <option value="BC">BC</option>
+          <option value="AB">AB</option>
+          <option value="SK">SK</option>
+          <option value="MB">MB</option>
+          <option value="ON">ON</option>
+          <option value="QC">QC</option>
+          <option value="NS">NS</option>
+          <option value="NL">NL</option>
+          <option value="PE">PE</option>
+          <option value="NT">NT</option>
+          <option value="NU">NU</option>
+          <option value="YT">YT</option>
+        </select>
+      </label>
+
+      <small style="display:block; color:#333; margin-bottom:5px;">
+        *Tax estimate based on selected province. Final tax will be calculated at checkout based on shipping address.
+      </small>
+
+      <button onclick="closeCart()" style="background:linear-gradient(135deg, #d16ba5, #86a8e7, #5ffbf1); color:white; padding:10px 20px; border:none; border-radius:6px; margin-right:10px;">Exit</button>
+
+      <div style="text-align:center; margin-top:20px;">
+        <button onclick="checkoutWithStripe()" style="padding:10px 20px; margin:10px; border:none; border-radius:6px; cursor:pointer; background:#6772e5; color:white; font-weight:bold;">
+          <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Credit Card" style="width:20px; vertical-align:middle; margin-right:8px;">
+          Pay with via Stripe©
+        </button>
+
+        <button onclick="checkoutWithPayPal()" style="padding:10px 20px; margin:10px; border:none; border-radius:6px; cursor:pointer; background:#ffc439; color:#003087; font-weight:bold;">
+          <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" style="width:20px; vertical-align:middle; margin-right:8px;">
+          Pay with PayPal ©
+        </button>
+
+        <p style="text-align:center; font-size:12px; color:white;">🔒 Secure checkout with Stripe and PayPal</p>
+      </div>
+    </div>
+  </div>
+
+  <footer style="font-size:14px; padding:20px; color:white; background:rgba(0,0,0,0.2); margin-top:40px;">
+  <p style="margin-bottom:10px;">2025 Jesus Crosswear™</p>
+  <p style="margin-bottom:10px;">
+    This site is operated by a sole proprietor. All sales are final unless otherwise stated. For questions, refunds, or shipping concerns, contact: 
+    <a href="mailto:jesuscrosswear@gmail.com" style="color:#add8e6;">jesuscrosswear@gmail.com</a>
+  </p>
+  <p>Payment processing is handled securely through Stripe and PayPal.</p>
+
+  <div style="margin-top:15px; display:flex; gap:12px; justify-content:center;">
+
+    <!-- Stripe Gift Button -->
+    <button onclick="giftwithStripe()" 
+            style="
+              padding: 8px 16px;
+              border: none;
+              border-radius: 6px;
+              cursor: pointer;
+              background: linear-gradient(135deg, #d16ba5, #86a8e7, #5ffbf1);
+              color: white;
+              font-weight: bold;
+              font-size: 0.8rem;
+              box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+              transition: background 0.3s ease;
+              display: flex;
+              align-items: center;
+            "
+            onmouseover="this.style.background='linear-gradient(135deg, #5ffbf1, #86a8e7, #d16ba5)'"
+            onmouseout="this.style.background='linear-gradient(135deg, #d16ba5, #86a8e7, #5ffbf1)'">
+      <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Credit Card" 
+           style="width:16px; vertical-align:middle; margin-right:6px;">
+      Gift with Stripe ©
+    </button>
+
+    <!-- PayPal Gift Button -->
+    <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin:0;">
+      <input type="hidden" name="hosted_button_id" value="IDKP5B6HXPHFE82" />
+      <button type="submit"
+              style="
+                padding: 8px 16px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                background: linear-gradient(135deg, #d16ba5, #86a8e7, #5ffbf1);
+                color: white;
+                font-weight: bold;
+                font-size: 0.83rem;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+                transition: background 0.3s ease;
+                display: flex;
+                align-items: center;
+              "
+              onmouseover="this.style.background='linear-gradient(135deg, #5ffbf1, #86a8e7, #d16ba5)'"
+              onmouseout="this.style.background='linear-gradient(135deg, #d16ba5, #86a8e7, #5ffbf1)'">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" 
+             style="width:16px; vertical-align:middle; margin-right:6px;">
+        Gift with PayPal ©
+      </button>
+    </form>
+
+  </div>
+</footer>
+<!-- Image Modal -->
+<div id="imageModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+    background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
+  <img id="modalImage" src="" alt="Popup Image" style="max-width:90%; max-height:90%; border-radius:8px;">
+</div>
+  <script>
+    const preorderModal = document.getElementById('preorderModal');
+    const inventory = {
+      "Old English" : { S: 50, M: 50, L: 50, XL: 50 },
+      "Hand Written": { S: 50, M: 50, L: 50, XL: 50 }
+    };
+    const cart = loadCartFromStorage();
+
+    function getCartQuantityFor(productName, size) {
+      return cart.filter(item => item.product === productName && item.size === size)
+                 .reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function incrementQty(size) {
+      const input = document.querySelector(`input[name="qty-${size}"]`);
+      input.value = parseInt(input.value || 0, 10) + 1;
+      updateLiveTotal();
+    }
+
+    function decrementQty(size) {
+      const input = document.querySelector(`input[name="qty-${size}"]`);
+      const current = parseInt(input.value || 0, 10);
+      input.value = current > 0 ? current - 1 : 0;
+      updateLiveTotal();
+    }
+
+    function canAddToCart(style, size, requestedQty) {
+      const available = inventory[style]?.[size] ?? 0;
+      const currentQtyInCart = getCartQuantityFor(style, size);
+      return requestedQty + currentQtyInCart <= available;
+    }
+
+    function loadCartFromStorage() {
+      const stored = localStorage.getItem('crosswearCart');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveCartToStorage() {
+      localStorage.setItem('crosswearCart', JSON.stringify(cart));
+    }
+
+    function updateCartBadge() {
+      const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').textContent = totalQuantity;
+    }
+
+    function resetPreorderForm() {
+      preorderModal.querySelectorAll('input[type="number"]').forEach(i => { i.value = "0"; });
+      preorderModal.querySelector('#liveTotal').textContent = `Total: $0.00 CAD`;
+    }
+
+    function updateLiveTotal() {
+      const unitPrice = 35.99;
+      let total = 0;
+      ['S', 'M', 'L', 'XL'].forEach(size => {
+        const input = preorderModal.querySelector(`input[name="qty-${size}"]`);
+        const qty = parseInt(input.value, 10);
+        if (!isNaN(qty) && qty > 0) total += qty * unitPrice;
+      });
+      preorderModal.querySelector('#liveTotal').textContent = `Total: $${total.toFixed(2)} CAD`;
+    }
+
+    function addToCart() {
+      const style = preorderModal.querySelector('#modalProductName').textContent.trim();
+      const frontImg = preorderModal.querySelector('#modalFront').src;
+      const backImg = preorderModal.querySelector('#modalBack').src;
+
+      let added = false;
+
+      ['S', 'M', 'L', 'XL'].forEach(size => {
+        const input = preorderModal.querySelector(`input[name="qty-${size}"]`);
+        const qty = parseInt(input.value, 10);
+        if (!qty || qty < 1) return;
+
+        if (!canAddToCart(style, size, qty)) {
+          const available = inventory[style]?.[size] ?? 0;
+          const alreadyInCart = getCartQuantityFor(style, size);
+          const remaining = available - alreadyInCart;
+          alert(`Only ${remaining} left for size ${size} in ${style}.`);
+          return;
+        }
+
+        cart.push({
+          product: style,
+          size,
+          quantity: qty,
+          unitPrice: 35.99,
+          frontImg,
+          backImg
+        });
+        added = true;
+      });
+
+      if (added) {
+        updateCartBadge();
+        saveCartToStorage();
+        viewCart();
+      } else {
+        alert('Please enter at least one quantity.');
+      }
+    }
+const TAX_TABLE = {
+  AB:0.05, BC:0.12, MB:0.12, NB:0.15, NL:0.15, NS:0.15, NT:0.05, NU:0.05,
+  ON:0.13, PE:0.15, QC:0.14975, SK:0.11, YT:0.05
+};
+function currentProvince() {
+  const sel = document.getElementById("provinceSelect");
+  return sel ? sel.value : "BC";
+}
+const SHIPPING_RATE = 10.99;          // flat S&H
+const FREE_SHIPPING_THRESHOLD = 150;  // subtotal for free ship
+   function viewCart() {
+  const cartModal   = document.getElementById('cartModal');
+  const cartContents= document.getElementById('cartContents');
+  const cartTotalEl = document.getElementById('cartTotal');
+
+  cartContents.innerHTML = '';
+  if (cart.length === 0) {
+    cartContents.innerHTML = "<p>Your cart is empty.</p>";
+    cartTotalEl.textContent = "0.00";
+    cartModal.style.display = 'flex';
+    return;
+  }
+
+  let subtotal = 0;
+  cart.forEach((item, index) => {
+    const itemTotal = item.unitPrice * item.quantity;
+    subtotal += itemTotal;
+
+    cartContents.innerHTML += `
+      <div style="margin-bottom:10px; border-bottom:1px solid #ccc; padding-bottom:10px;">
+        <strong>${item.product}</strong> - ${item.size}<br>
+        <img src="${item.frontImg}" style="width:50px; vertical-align:middle;">
+        Qty:
+        <input type="number" value="${item.quantity}" min="1" style="width:40px;">
+        <button onclick="removeFromCart(${index})" style="margin-left:5px;">Remove</button>
+
+        <p>
+          <span style="color:gray; text-decoration:line-through;">
+            $${(item.unitPrice + 10).toFixed(2)}
+          </span>
+          <span style="color:yellow; font-weight:bold; margin-left:8px;
+                text-shadow:-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000,
+                            -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;">
+            $${item.unitPrice.toFixed(2)} each
+          </span>
+        </p>
+        <p style="margin:5px 0;">Item Total: $${itemTotal.toFixed(2)}</p>
+      </div>`;
+  });
+
+  const province   = currentProvince();
+  const taxRate    = TAX_TABLE[province] ?? 0.05;
+  const taxAmount  = subtotal * taxRate;
+  const shipping   = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_RATE;
+  const grandTotal = subtotal + taxAmount + shipping;
+
+  cartContents.innerHTML += `
+    <div style="text-align:right; font-weight:bold; margin-top:10px;">
+      Subtotal: $${subtotal.toFixed(2)}<br>
+      Tax (${(taxRate * 100).toFixed(1)}% ${province}): $${taxAmount.toFixed(2)}<br>
+      Shipping: ${shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}<br>
+      <span style="font-size:1.07em;">Total: $${grandTotal.toFixed(2)} CAD</span>
+    </div>`;
+  cartTotalEl.textContent = grandTotal.toFixed(2);
+  cartModal.style.display = 'flex';
+  attachQuantityInputEnterHandlers();
+  const provinceDropdown = document.getElementById("provinceSelect");
+  if (provinceDropdown) {
+    provinceDropdown.removeEventListener("change", viewCart); // prevent stacking
+    provinceDropdown.addEventListener("change", viewCart);
+  }
+}
+function attachQuantityInputEnterHandlers() {
+  document.querySelectorAll('#cartContents input[type="number"]').forEach((input, index) => {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleCartQtyChange(input, index);
+      }
+    });
+    input.addEventListener('change', () => {
+      handleCartQtyChange(input, index);
+      });
+    });
+  }
+  
+    function handleCartQtyChange(input, index) {
+      const val = input.value.trim();
+      if (val === '' || val === '0') {
+        cart.splice(index, 1);
+        saveCartToStorage();
+        updateCartBadge();
+        viewCart();
+        return;
+      }
+      const qty = parseInt(val, 10);
+      if (!isNaN(qty) && qty > 0) {
+        cart[index].quantity = qty;
+        saveCartToStorage();
+        updateCartBadge();
+        viewCart();
+      }
+    }
+    function removeFromCart(index) {
+      if (cart[index].quantity > 1) {
+        cart[index].quantity -= 1;
+      } else {
+        cart.splice(index, 1);
+      }
+      saveCartToStorage();
+      updateCartBadge();
+      viewCart();
+    }
+    function clearCart() {
+      cart.length = 0;
+      localStorage.removeItem('crosswearCart');
+      updateCartBadge();
+      viewCart();
+    }
+    function closeCart() {
+      document.getElementById('cartModal').style.display = 'none';
+    }
+    function closeModal() {
+      preorderModal.style.display = 'none';
+    }
+
+    function finalizeCart() {
+      cart.forEach(item => {
+       inventory[item.product][item.size] -= item.quantity;
+       });
+    }
+    
+    document.querySelectorAll('.preorder-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const product = button.getAttribute('data-product');
+        const frontImg = button.getAttribute('data-front');
+        const backImg  = button.getAttribute('data-back');
+        preorderModal.querySelector('#modalProductName').textContent = product;
+        preorderModal.querySelector('#modalFront').src = frontImg;
+        preorderModal.querySelector('#modalBack').src  = backImg;
+        resetPreorderForm();
+        preorderModal.style.display = 'flex';
+      });
+    });
+    updateCartBadge();
+    const imgModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+
+// Attach click listeners to all product images you want to pop up
+document.querySelectorAll('.image-row img').forEach(img => {
+  img.addEventListener('click', () => {
+    modalImage.src = img.src;      // Set modal image source to clicked image
+    imgModal.style.display = "flex"; // Show modal (using flex for centering)
+  });
+});
+
+// Clicking outside the image or on the modal closes it
+imgModal.addEventListener('click', (e) => {
+  if (e.target === imgModal || e.target === modalImage) {
+    imgModal.style.display = "none";
+    modalImage.src = "";
+  }
+});
+    async function checkoutWithStripe() {
+      const response = await fetch("/.netlify/functions/stripe-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart })
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Something went wrong during checkout.");
+        console.error(data);
+      }
+    }
+    async function giftwithStripe() {
+      const response = await fetch("/.netlify/functions/stripe-gift", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Gift failed.");
+        console.error(data);
+      }
+    }
+    async function checkoutWithPayPal() {
+  const response = await fetch("/.netlify/functions/paypal-checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cart })
+  });
+  const data = await response.json();
+  if (data.url) {
+    window.location.href = data.url;
+  } else {
+    alert("PayPal checkout failed.");
+    console.error(data);
+  }
+}
+  </script>
+  <script src="https://js.stripe.com/v3/"></script>
+</body>
+</htmlc
