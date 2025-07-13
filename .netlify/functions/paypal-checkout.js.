@@ -1,0 +1,88 @@
+
+const DOMAIN =
+  process.env.PAYPAL_ENV === 'live'
+    ? 'https://api-m.paypal.com'
+    : 'https://api-m.sandbox.paypal.com';
+
+async function getAccessToken() {
+  const creds = Buffer.from(
+    `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`,
+  ).toString('base64');
+
+  const res = await fetch(`${DOMAIN}/v1/oauth2/token`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${creds}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'grant_type=client_credentials',
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(`PayPal token error ${res.status}: ${JSON.stringify(err)}`);
+  }
+  return (await res.json()).access_token;
+}
+
+function buildPurchaseUnits(cart) {
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * (item.quantity ?? 1),
+    0,
+  );
+  return [
+    {
+      amount: { currency_code: 'USD', value: total.toFixed(2) },
+    },
+  ];
+}
+
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST')
+    return { statusCode: 405, body: 'Method Not Allowed' };
+
+  let cart = [];
+  try {
+    ({ cart } = JSON.parse(event.body));
+  } catch {
+    return { statusCode: 400, body: 'Bad JSON' };
+  }
+  if (!Array.isArray(cart) || cart.length === 0)
+    return { statusCode: 400, body: 'Cart is empty' };
+
+  try {
+    const accessToken = await getAccessToken();
+
+    const orderRes = await fetch(`${DOMAIN}/v2/checkout/orders`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        intent: 'CAPTURE',
+        purchase_units: buildPurchaseUnits(cart),
+        application_context: {
+          return_url: process.env.SUCCESS_URL,
+          cancel_url: process.env.CANCEL_URL,
+        },
+      }),
+    });
+
+    if (!orderRes.ok) {
+      const err = await orderRes.json();
+      throw new Error(
+        `PayPal order error ${orderRes.status}: ${JSON.stringify(err)}`,
+      );
+    }
+    const order = await orderRes.json();
+    const approveLink = order.links.find((l) => l.rel === 'approve');
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ url: approveLink?.href, orderID: order.id }),
+    };
+  } catch (err) {
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+  }
+};
