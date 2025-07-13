@@ -17,7 +17,7 @@ exports.handler = async (event) => {
             product_data: {
               name: 'Gift Purchase',
             },
-            unit_amount: 5000, // $50 gift example amount
+            unit_amount: 500, // $5 gift example amount
           },
           quantity: 1,
         },
