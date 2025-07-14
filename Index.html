@@ -77,11 +77,12 @@
       color: white;
       padding: 2px;
       box-sizing: border-box;
+      aspect-ratio: 3 / 2;
     }
 
     .product-card img {
-      width: 100%;
       object-fit: cover;
+
     }
 
     .image-row {
@@ -201,6 +202,26 @@
 
 </head>
 <body>
+  
+  
+  
+  <button onclick="testNetlifyFunction()">Test Function</button>
+
+<script>
+  async function testNetlifyFunction() {
+    const response = await fetch("/.netlify/functions/stripe-checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cart: [{ name: 'Test', price: 10, quantity: 1 }] })
+    });
+    const data = await response.json();
+    console.log('Response:', data);
+    alert(JSON.stringify(data));
+  }
+</script>
+  
+  
+  
   <div class="page-wrapper">
     <div class="title"><h1>Cross Wear</h1></div>
 
